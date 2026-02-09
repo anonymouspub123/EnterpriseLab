@@ -266,7 +266,7 @@ cd Evaluate/EnterpriseArena
 python Interactive_mcp_localM.py \
   --model_path <model_checkpoint> \
   --mcp_config mcp_config_http.json \
-  --tasks tasks.json \
+  --tasks ../../Data/tasks.json \
   --output_trajectories ./output_trajectories.jsonl
 ```
 
@@ -284,7 +284,7 @@ After generating trajectories, evaluate them against gold standard trajectories 
 cd Evaluate/MCP_eval
 python mcp_evaluator.py \
   --output_trajectories ../EnterpriseArena/output_trajectories.jsonl \
-  --gold_trajectories <path_to_gold_trajectories> \
+  --gold_trajectories ../../Data/enterprise_arena_gold.json \
   --output_results ./evaluation_results.json
 ```
 
@@ -321,6 +321,22 @@ The pipeline will include:
 - Multi-step workflow generation
 - Quality validation and filtering
 
+## 📁 Evaluation Data
+
+The `Data/` folder contains essential datasets for evaluating LLM agents:
+
+### tasks.json
+Contains structured task definitions for enterprise evaluation. Each task includes:
+- **Task description**: Natural language instruction for the agent
+
+### enterprise_arena_gold.json
+Gold standard trajectories showing optimal task completion paths. Each trajectory contains:
+- **Tool call sequences**: Correct order and parameters for tool usage
+- **Intermediate states**: Expected system states after each action
+- **Final answers**: Ground truth outputs for verification
+
+These files are used by the evaluation pipeline to assess agent performance against established benchmarks.
+
 ## 🗂️ Repository Structure
 
 ```
@@ -344,6 +360,9 @@ EnterpriseLab/
 │       ├── frappe/                    # Frappe MCP server
 │       ├── aider/                     # Aider coding assistant MCP
 │       └── playwright/                # Playwright automation MCP
+├── Data/                               # Evaluation datasets
+│   ├── tasks.json                     # Enterprise task definitions
+│   └── enterprise_arena_gold.json     # Gold standard trajectories
 ├── Train/                              # Training pipelines
 │   ├── SFT/                           # Supervised fine-tuning
 │   ├── DPO/                           # Direct preference optimization
